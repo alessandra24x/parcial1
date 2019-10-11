@@ -1,0 +1,50 @@
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "utn.h"
+#include "customer.h"
+#include "order.h"
+
+int order_init(Order array[], int size) {
+    int retorno = -1;
+    int i;
+    if(array != NULL && size > 0) {
+        for(i = 0; i < size; i++) {
+            array[i].isEmpty = 0;
+        }
+        retorno = 0;
+    }
+    return retorno;
+}
+
+int order_searchEmpty(Order array[], int size, int* position) {
+    int retorno = -1;
+    int i;
+    if(array != NULL && size >= 0 && position != NULL) {
+        for(i = 0; i < size; i++) {
+            if(array[i].isEmpty == 0) {
+                retorno = 0;
+                *position = i;
+                break;
+            }
+        }
+    }
+    return retorno;
+}
+
+int order_buscarID(Order array[], int size, int searchValue, int* position) {
+    int retorno = -1;
+    int i;
+    if(array != NULL && size >= 0) {
+        for( i= 0; i < size; i++) {
+            if(array[i].isEmpty == 0)
+                continue;
+            else if(array[i].customerID == valorBuscado) {
+                retorno = 0;
+                *posicion = i;
+                break;
+            }
+        }
+    }
+    return retorno;
+}

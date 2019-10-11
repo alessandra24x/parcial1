@@ -1,0 +1,25 @@
+#define TEXT_SIZE 51
+#define PHONE_SIZE 21
+
+typedef struct {
+    int customerCode;
+    char name[TEXT_SIZE];
+    char lastName[TEXT_SIZE];
+    char sex[TEXT_SIZE];
+    char phone[PHONE_SIZE];
+    char adress[TEXT_SIZE];
+    int isEmpty;
+}Customer;
+
+int customer_init(Customer array[], int size);
+int customer_searchEmpty(Customer array[], int size, int* position);
+int customer_searchID(Customer array[], int size, int searchValue, int* position);
+int customer_searchInt(Customer array[], int size, int searchValue, int* position);
+int customer_searchString(Customer array[], int size, char* searchValue, int* index);
+int customer_add(Customer array[], int size, int* countID);
+int customer_modify(Customer array[], int size);
+int customer_remove(Customer array[], int size);
+int customer_sort(Customer* array, int size);
+int customer_show(Customer* array, int size);
+void setCustomer(Customer array[], int searchEmpty, int customerCodeAux, char nameAux[], char lastNameAux[], char sexAux[], char phoneAux[],
+                char adressAux[]);

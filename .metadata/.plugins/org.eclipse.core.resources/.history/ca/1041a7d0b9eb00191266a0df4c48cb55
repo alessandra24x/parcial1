@@ -1,0 +1,9 @@
+#define TEXT_SIZE 51
+#define TEXT_CUIT 20
+
+typedef struct {
+    int orderID;
+    int totalKg;
+    char status[TEXT_SIZE];
+    int isEmpty;
+}Order;

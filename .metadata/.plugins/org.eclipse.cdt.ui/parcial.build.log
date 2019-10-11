@@ -1,0 +1,45 @@
+21:29:09 **** Incremental Build of configuration Debug for project parcial ****
+make all 
+Building file: ../src/order.c
+Invoking: GCC C Compiler
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/order.d" -MT"src/order.o" -o "src/order.o" "../src/order.c"
+In file included from ../src/order.c:6:0:
+../src/order.h:11:1: warning: data definition has no type or storage class
+ order_init(Order array[], int size);
+ ^~~~~~~~~~
+../src/order.h:11:1: warning: type defaults to ‘int’ in declaration of ‘order_init’ [-Wimplicit-int]
+../src/order.h:12:1: warning: data definition has no type or storage class
+ order_searchEmpty(Order array[], int size, int* position);
+ ^~~~~~~~~~~~~~~~~
+../src/order.h:12:1: warning: type defaults to ‘int’ in declaration of ‘order_searchEmpty’ [-Wimplicit-int]
+../src/order.h:13:1: warning: data definition has no type or storage class
+ order_searchID(Order array[], int size, int searchValue, int* position);
+ ^~~~~~~~~~~~~~
+../src/order.h:13:1: warning: type defaults to ‘int’ in declaration of ‘order_searchID’ [-Wimplicit-int]
+../src/order.h:14:1: warning: data definition has no type or storage class
+ order_pickup(Order array[], int size, Customer arrayCustomer[], int sizeCustomer);
+ ^~~~~~~~~~~~
+../src/order.h:14:1: warning: type defaults to ‘int’ in declaration of ‘order_pickup’ [-Wimplicit-int]
+../src/order.c: In function ‘order_pickup’:
+../src/order.c:65:31: warning: passing argument 1 of ‘order_searchID’ from incompatible pointer type [-Wincompatible-pointer-types]
+             if(order_searchID(arrayCustomer, sizeCustomer, arrayCustomer[position].customerID, position) == 0) {
+                               ^~~~~~~~~~~~~
+../src/order.c:35:5: note: expected ‘Order * {aka struct <anonymous> *}’ but argument is of type ‘Customer * {aka struct <anonymous> *}’
+ int order_searchID(Order array[], int size, int searchValue, int* position) {
+     ^~~~~~~~~~~~~~
+../src/order.c:65:96: warning: passing argument 4 of ‘order_searchID’ makes pointer from integer without a cast [-Wint-conversion]
+             if(order_searchID(arrayCustomer, sizeCustomer, arrayCustomer[position].customerID, position) == 0) {
+                                                                                                ^~~~~~~~
+../src/order.c:35:5: note: expected ‘int *’ but argument is of type ‘int’
+ int order_searchID(Order array[], int size, int searchValue, int* position) {
+     ^~~~~~~~~~~~~~
+Finished building: ../src/order.c
+ 
+Building target: parcial
+Invoking: GCC C Linker
+gcc  -o "parcial"  ./src/customer.o ./src/main.o ./src/order.o ./src/utn.o   
+Finished building target: parcial
+ 
+
+21:29:10 Build Finished. 0 errors, 10 warnings. (took 313ms)
+

@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "customer.h"
+#include "utn.h"
+
+#define QTY_CUSTOMER 100
+
+int main() {
+
+  int option;
+  int countID = 0;
+
+	Customer arrayCustomer[QTY_CUSTOMER];
+	customer_init(arrayCustomer,QTY_CUSTOMER);
+
+  setCustomer(arrayCustomer, 1, 1, "Banco Galicia", "258965", "Chile 215", "CABA");
+  setCustomer(arrayCustomer, 2, 2, "Automotores", "65445455", "Salta 456", "Cordoba");
+  setCustomer(arrayCustomer, 3, 3, "Flores SA", "22254486", "Ramallo 4185", "Tucuman");
+  setCustomer(arrayCustomer, 4, 4, "Jazmin", "258965451", "Av Independencia 2854", "CABA");
+  setCustomer(arrayCustomer, 5, 5, "Romero SRL", "236966456", "Av Santa Fe 5501", "Santa Fe");
+
+  do {
+		 utn_getUnsignedInt("\n\n1) Alta del Cliente \n2) Modificar Cliente \n3) Baja del Cliente \n4) Mostrar Clientes \n5) Salir \n",
+                 "\nError",1,sizeof(int),1,11,1,&option);
+	        switch(option) {
+	            case 1: //Alta
+                printf("Alta de Cliente\n");
+                customer_add(arrayCustomer,QTY_CUSTOMER,&countID);
+	              break;
+	            case 2: //Modificar
+                  printf("Modificar el registro de un Cliente\n");
+                  customer_modify(arrayCustomer,QTY_CUSTOMER);
+                break;
+	            case 3: //Baja
+                  printf ("Dar de baja un Cliente.\n");
+                  customer_remove(arrayCustomer,QTY_CUSTOMER);
+                break;
+	            case 4:
+                  printf ("Lista de Clientes.\n");
+                  customer_show(arrayCustomer,QTY_CUSTOMER);
+                break;
+	            case 5:
+	              printf("\nSaliendo...");
+	              break;
+	            default:
+	                 printf("\nOpcion no valida");
+	        }
+	    }
+	    while(option != 5);
+	    return 0;
+}

@@ -3,12 +3,21 @@
 
 typedef struct {
     int orderID;
+    int customerID;
     int totalKg;
     char status[TEXT_SIZE];
     int isEmpty;
+    int HDPE_kg;
+	  int LDPE_kg;
+	  int PP_kg;
 }Order;
 
-order_init(Order array[], int size);
-order_searchEmpty(Order array[], int size, int* position);
-order_searchID(Order array[], int size, int searchValue, int* position);
-order_pickup(Order array[], int size, Customer arrayCustomer[], int sizeCustomer);
+int order_init(Order array[], int size);
+int order_searchEmpty(Order array[], int size, int* position);
+int order_searchID(Order array[], int size, int searchValue, int* position);
+//int order_pickup(Order array[], int size,Customer arrayCustomer[], int sizeCustomer, int* countID);
+int order_show(Order* array, int size);
+int order_processWaste(Order array[], int size);
+int order_pendingStatus(Order* array, int size, int *countStatusPending, int customerID);
+int orderPendingStatus_show(Order* array, int size);
+int orderCompleteStatus_show(Order* array, int size);

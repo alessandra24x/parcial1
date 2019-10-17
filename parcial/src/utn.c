@@ -3,6 +3,16 @@
 #include <string.h>
 #include "utn.h"
 
+/**
+* \brief Solicita un texto al usuario y lo devuelve
+* \param msg Mensaje a ser mostrado
+* \param msgError Mensaje a ser mostrado en caso de error
+* \param min Cantidad minima de elementos que recibirá el string
+* \param max Cantidad máxima de elementos que recibirá el string
+* \param reintentos Cantidad de reintentos que el usuario tendrá
+* \param resultado Array donde se cargará el texto ingresado
+* \return 0 si el texto contiene solo letras
+*/
 int getString(char* msg, char* msgError, int min, int max, int* reintentos, char* resultado) {
 	int retorno = -1;
     char bufferStr[max];
@@ -26,6 +36,16 @@ int getString(char* msg, char* msgError, int min, int max, int* reintentos, char
     return retorno;
 }
 
+/**
+* \brief Solicita un texto al usuario y lo devuelve
+* \param msg Mensaje a ser mostrado
+* \param msgError Mensaje a ser mostrado en caso de error
+* \param min Cantidad minima de elementos que recibirá el string
+* \param max Cantidad máxima de elementos que recibirá el string
+* \param reintentos Cantidad de reintentos que el usuario tendrá
+* \param resultado Array donde se cargará el texto ingresado
+* \return 0 si el texto es un nombre valido
+*/
 int utn_getName(char* msg, char* msgError, int min, int max, int reintentos, char* resultado) {
 	int retorno = -1;
     char bufferStr[max];
@@ -49,6 +69,11 @@ int utn_getName(char* msg, char* msgError, int min, int max, int reintentos, cha
     return retorno;
 }
 
+/**
+* \brief Recibe un string y verifica que esté en un rango del teclado (A-Z, a-z)
+* \param stringRecibido string a verificar
+* \return 0 si el string esta en un rango valido (A-Z, a-z)
+*/
 int isValidName(char* stringRecibido) {
     int retorno = 0;
     int i;
@@ -62,42 +87,18 @@ int isValidName(char* stringRecibido) {
     return retorno;
 }
 
-int utn_getSex(char* msg, char* msgError, int min, int max, int reintentos, char* resultado) {
-	int retorno = -1;
-  char bufferStr[max];
-
-    if(msg != NULL && msgError != NULL && min <= max && reintentos >= 0 && resultado != NULL) {
-        do {
-            if(getString(msg,msgError,min,max,&reintentos,bufferStr) == 0) {
-                if(isValidSex(bufferStr) == 0) {
-                    strncpy(resultado,bufferStr,max);
-                    retorno = 0;
-                    break;
-                }
-                else {
-                    printf("%s",msgError);
-                    reintentos--;
-                }
-            }
-        }
-        while(reintentos >= 0);
-    }
-    return retorno;
-}
-
-int isValidSex(char* stringRecibido) {
-    int retorno = 0;
-    int i;
-    for(i = 0; stringRecibido[i] != '\0'; i++) {
-        //printf("%d",i);
-        if(stringRecibido[i] != 'M' && stringRecibido[i] != 'F') {
-            retorno = -1;
-            break;
-        }
-    }
-    return retorno;
-}
-
+/**
+* \brief Solicita un entero al usuario y lo devuelve
+* \param msg Mensaje a ser mostrado
+* \param msgError Mensaje a ser mostrado en caso de error
+* \param minSize cantidad minimo de elementos que tendrá el array
+* \param maxSize cantidad máxima de elementos que tendrá el array
+* \param min Cantidad minima de elementos que recibirá el string
+* \param max Cantidad máxima de elementos que recibirá el string
+* \param reintentos Cantidad de reintentos que el usuario tendrá
+* \param input Array donde se cargará el texto ingresado
+* \return 0 si efectivamente el numero es un entero
+*/
 int utn_getUnsignedInt(char* msg,char* msgError,int minSize,int maxSize,int min,int max,int reintentos,int* input) {
     int retorno = -1;
     char bufferStr[maxSize];
@@ -120,6 +121,11 @@ int utn_getUnsignedInt(char* msg,char* msgError,int minSize,int maxSize,int min,
     return retorno;
 }
 
+/**
+* \brief Recibe un string y verifica que esté en el rango numerico del teclado (0-9)
+* \param stringRecibido string a verificar
+* \return 0 si el string esta en un rango numerico
+*/
 int isValidNumber(char* stringRecibido) {
     int retorno = 0;
     int i;
@@ -132,144 +138,14 @@ int isValidNumber(char* stringRecibido) {
     return retorno;
 }
 
-int utn_getSignedInt(char* msg, char* msgError, int minSize, int maxSize, int min, int max, int reintentos, int* input) {
-    int retorno = -1;
-    char bufferStr[maxSize];
-
-    if(msg != NULL && msgError != NULL && minSize < maxSize && min < max && reintentos >= 0 && input != NULL) {
-        do {
-            if(getString(msg,msgError,minSize,maxSize,&reintentos,bufferStr) == 0) {
-                if(isValidSignedNumber(bufferStr) == 0) {
-                    *input = atoi(bufferStr);
-                    retorno = 0;
-                    break;
-                } else {
-                    printf("%s",msgError);
-                    reintentos--;
-                }
-            }
-        }
-        while(reintentos >= 0);
-    }
-    return retorno;
-}
-
-int isValidSignedNumber(char* stringRecibido) {
-    int retorno = 0;
-    int i;
-    for(i = 0; stringRecibido[i] != '\0'; i++) {
-        if((stringRecibido[i] < '0' || stringRecibido[i] > '9') && (stringRecibido[0] != '+' && stringRecibido[0] != '-')) {
-            retorno = -1;
-            break;
-        }
-    }
-    return retorno;
-}
-
-int utn_getFloat(char* msg, char* msgError, int minSize, int maxSize, int min, int max, int reintentos, float* input) {
-    int retorno = -1;
-    char bufferStr[maxSize];
-
-    if(msg != NULL && msgError != NULL && minSize < maxSize && min < max && reintentos >= 0 && input != NULL) {
-        do {
-            if(getString(msg,msgError,minSize,maxSize,&reintentos,bufferStr) == 0) {
-                if(isValidFloatNumber(bufferStr) == 0) {
-                    *input = atof(bufferStr);
-                    retorno = 0;
-                    break;
-                } else {
-                    printf("%s",msgError);
-                    reintentos--;
-                }
-            }
-        }
-        while(reintentos >= 0);
-    }
-    return retorno;
-}
-
-int isValidFloatNumber(char* stringRecibido) {
-    int retorno = 0;
-    int i;
-    for(i = 0; stringRecibido[i] != '\0'; i++) {
-        if((stringRecibido[i] < '0' || stringRecibido[i] > '9') && (stringRecibido[i] != '.')) {
-            retorno = -1;
-            break;
-        }
-    }
-    return retorno;
-}
-
-int utn_getTelephone(char* msg, char* msgError, int minSize, int maxSize, int reintentos, char* input) {
-    int retorno = -1;
-    char bufferStr[maxSize];
-
-    if(msg != NULL && msgError != NULL && minSize < maxSize  && reintentos >= 0 && input != NULL) {
-        do {
-            if(getString(msg,msgError,minSize,maxSize,&reintentos,bufferStr) == 0) {
-                if(isValidTelephone(bufferStr) == 0) {
-                    strncpy(input,bufferStr,maxSize);
-                    retorno = 0;
-                    break;
-                } else {
-                    printf("%s",msgError);
-                    reintentos--;
-                }
-            }
-        }
-        while(reintentos >= 0);
-    }
-    return retorno;
-}
-
-int isValidTelephone(char* stringRecibido) {
-    int retorno = 0;
-    int i;
-    for(i = 0; stringRecibido[i] != '\0'; i++) {
-        if((stringRecibido[i] < '0' || stringRecibido[i] > '9') && (stringRecibido[i] != '-' || stringRecibido[i] != ' ')) {
-            retorno = -1;
-            break;
-        }
-    }
-    return retorno;
-}
-
-int utn_getDNI(char* msg, char* msgError, int minSize, int maxSize, int reintentos, char* input) {
-    maxSize = 11;
-    minSize = 8;
-    int retorno = -1;
-    char bufferStr[maxSize];
-
-    if(msg != NULL && msgError != NULL && minSize < maxSize && reintentos >= 0 && input != NULL) {
-        do {
-            if(getString(msg,msgError,minSize,maxSize,&reintentos,bufferStr) == 0) {
-                if(isValidDNI(bufferStr) == 0) {
-                    strncpy(input,bufferStr,maxSize);
-                    retorno = 0;
-                    break;
-                } else {
-                    printf("%s",msgError);
-                    reintentos--;
-                }
-            }
-        }
-        while(reintentos >= 0);
-    }
-    return retorno;
-}
-
-int isValidDNI(char* stringRecibido) {
-    int retorno = 0;
-    int i;
-    for(i = 0; stringRecibido[i] != '\0'; i++) {
-        if((stringRecibido[i] < '0' || stringRecibido[i] > '9') && (stringRecibido[i] != '.')) {
-            retorno = -1;
-            break;
-        }
-    }
-    return retorno;
-}
-
+/**
+* \brief Solicita un texto al usuario y lo devuelve
+* \param msg Mensaje a ser mostrado
+* \param msgError Mensaje a ser mostrado en caso de error
+* \param reintentos Cantidad de reintentos que el usuario tendrá
+* \param input Array donde se cargará el texto ingresado
+* \return 0 si el texto es un nombre valido
+*/
 int utn_getCUIT(char* msg, char* msgError, int reintentos, char* input) {
     int maxSize = 14;
     int minSize = 11;
@@ -294,6 +170,11 @@ int utn_getCUIT(char* msg, char* msgError, int reintentos, char* input) {
     return retorno;
 }
 
+/**
+* \brief Recibe un string y verifica que esté en el rango numerico del teclado (0-9) y pueda contener guion: -
+* \param stringRecibido string a verificar
+* \return 0 si el string esta en el rango establecido
+*/
 int isValidCUIT(char* stringRecibido) {
     int retorno = 0;
     int i;
@@ -320,7 +201,7 @@ int isValidCUIT(char* stringRecibido) {
 
     for(i = 0;i < strlen(buffer-1); i++)
     {
-        acumulado+=buffer[i]*digitos[i];
+        acumulado += buffer[i]*digitos[i];
     }
 
     verificador = 11-(acumulado%11);
@@ -334,41 +215,16 @@ int isValidCUIT(char* stringRecibido) {
     return retorno;
 }
 
-int utn_getEmail(char* msg, char* msgError, int minSize, int maxSize, int reintentos, char* input) {
-    int retorno = -1;
-    char bufferStr[maxSize];
-
-    if(msg != NULL && msgError != NULL && minSize < maxSize && reintentos >= 0 && input != NULL) {
-        do {
-            if(getString(msg,msgError,minSize,maxSize,&reintentos,bufferStr) == 0) {
-                if(isValidEmail(bufferStr) == 0) {
-                    strncpy(input,bufferStr,maxSize);
-                    retorno = 0;
-                    break;
-                } else {
-                    printf("%s",msgError);
-                    reintentos--;
-                }
-            }
-        }
-        while(reintentos >= 0);
-    }
-    return retorno;
-}
-
-int isValidEmail(char* stringRecibido) {
-    int retorno = 0;
-    int i;
-    for(i = 0; stringRecibido[i] != '\0'; i++) {
-        if((stringRecibido[i] < '-' && stringRecibido[i] != '+') || (stringRecibido[i] > '9' && stringRecibido[i] < '@') ||
-           (stringRecibido[i] > 'Z' && stringRecibido[i] != '_' && stringRecibido[i] < 'a')|| stringRecibido[i] > 'z') {
-            retorno = -1;
-            break;
-        }
-    }
-    return retorno;
-}
-
+/**
+* \brief Solicita un texto al usuario y lo devuelve
+* \param msg Mensaje a ser mostrado
+* \param msgError Mensaje a ser mostrado en caso de error
+* \param minSize Cantidad minima de elementos que recibirá el string
+* \param maxSize Cantidad máxima de elementos que recibirá el string
+* \param reintentos Cantidad de reintentos que el usuario tendrá
+* \param input Array donde se cargará el texto ingresado
+* \return 0 si el texto es un texto valido
+*/
 int utn_getText(char* msg, char* msgError, int minSize, int maxSize, int reintentos, char* input) {
     int retorno = -1;
     char bufferStr[maxSize];
@@ -391,6 +247,11 @@ int utn_getText(char* msg, char* msgError, int minSize, int maxSize, int reinten
     return retorno;
 }
 
+/**
+* \brief Recibe un string y verifica que esté en un rango del teclado ("" o > z)
+* \param stringRecibido string a verificar
+* \return 0 si el string esta en un rango valido ("" o > z)
+*/
 int isValidText(char* stringRecibido) {
     int retorno = 0;
     int i;
@@ -403,40 +264,16 @@ int isValidText(char* stringRecibido) {
     return retorno;
 }
 
-int utn_getAlphanumeric(char* msg, char* msgError, int minSize, int maxSize, int reintentos, char* input) {
-    int retorno = -1;
-    char bufferStr[maxSize];
-
-    if(msg != NULL && msgError != NULL && minSize < maxSize && reintentos >= 0 && input != NULL) {
-        do {
-            if(getString(msg,msgError,minSize,maxSize,&reintentos,bufferStr) == 0) {
-                if(isValidAlphanumeric(bufferStr) == 0) {
-                    strncpy(input,bufferStr,maxSize);
-                    retorno = 0;
-                    break;
-                } else {
-                    printf("%s",msgError);
-                    reintentos--;
-                }
-            }
-        }
-        while(reintentos >= 0);
-    }
-    return retorno;
-}
-
-int isValidAlphanumeric(char* stringRecibido) {
-    int retorno = 0;
-    int i;
-    for(i = 0; stringRecibido[i] != '\0'; i++) {
-        if(stringRecibido[i] < '0' || (stringRecibido[i] > '9' && stringRecibido[i] < 'A') || (stringRecibido[i] > 'Z' && stringRecibido[i] < 'a') || stringRecibido[i] > 'z' ) {
-            retorno = -1;
-            break;
-        }
-    }
-    return retorno;
-}
-
+/**
+* \brief Solicita un texto al usuario y lo devuelve
+* \param msg Mensaje a ser mostrado
+* \param msgError Mensaje a ser mostrado en caso de error
+* \param min Cantidad minima de elementos que recibirá el string
+* \param max Cantidad máxima de elementos que recibirá el string
+* \param reintentos Cantidad de reintentos que el usuario tendrá
+* \param resultado Array donde se cargará el texto ingresado
+* \return 0 si el texto es un texto valido
+*/
 int utn_getChar(char* msg, char* msgError, int min, int max, int reintentos, char* resultado) {
     int retorno = -1;
     char bufferChar[max];
@@ -460,6 +297,11 @@ int utn_getChar(char* msg, char* msgError, int min, int max, int reintentos, cha
     return retorno;
 }
 
+/**
+* \brief Recibe un string y verifica que esté en un rango del teclado (A-Z, a-z)
+* \param stringRecibido string a verificar
+* \return 0 si el string esta en un rango valido (A-Z, a-z)
+*/
 int isValidChar(char charRecibido) {
     int retorno = 0;
     if(charRecibido < 'A' || (charRecibido > 'Z' && charRecibido < 'a') || charRecibido > 'z')

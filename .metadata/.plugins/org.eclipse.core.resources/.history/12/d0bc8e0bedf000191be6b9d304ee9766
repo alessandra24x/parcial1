@@ -120,7 +120,7 @@ int customer_modify(Customer array[], int size) {
             do {
             	printf("\n Posicion: %d\n Id: %d\n Nombre: %s\n CUIT: %s\n Direccion: %s\n Localidad: %s",
             	                   position,array[position].customerID,array[position].name,array[position].cuit,array[position].adress,array[position].location);
-                utn_getChar("\nModificar: A(domicilio) B(localidad) S(salir)","\nError, ingrese una opción valida",'A','Z',1,&option);
+                utn_getChar("\nModificar: A B S(salir)","\nError, ingrese una opción valida",'A','Z',1,&option);
                 switch(option) {
                     case 'A':
                     	utn_getText("\n Ingrese domicilio: ","\nError, ingrese un domicilio valido",1,TEXT_SIZE,1,array[position].adress);
@@ -195,9 +195,9 @@ int customer_show(Customer* array, int size) {
 }
 
 /** \brief Setea valores fijos para agilizar las pruebas
-* \param Customer[] array es el array de la estructura Customer
+* \param Customer* array es el array de la estructura Customer
 * \param int size es la longitud del array
-*
+* \return Esta función devuelve -1 si hay algún error [Invalid length or NULL pointer], 0 si está OK.
 */
 void setCustomer(Customer array[], int searchEmpty, int customerIDAux, char nameAux[], char cuitAux[],
                 char adressAux[], char locationAux[]) {
@@ -269,25 +269,4 @@ int customerPendingStatus_show(Customer* array, int size, Order* arrayOrder, int
     retorno = 0;
   }
  return retorno;
-}
-
-/** \brief Valida que el array este vacio o con datos ya cargados
- * \param array Customer*
- * \param size es la longitud del array
- * \return Esta función devuelve -1 si el array ya contiene data, 0 si está vacio.
- */
-int validateCustomerData(Customer* array, int size) {
-    int retorno;
-    int i;
-    if(array != NULL && size >= 0) {
-        for(i = 0; i < size; i++) {
-            if(array[i].isEmpty == 1) {
-                retorno = 0;
-                break;
-            } else {
-            	retorno = -1;
-            }
-        }
-    }
-    return retorno;
 }

@@ -234,7 +234,7 @@ int order_pickup(Order array[], int size, Customer arrayCustomer[], int sizeCust
           (*order_countID)++;
           array[position].orderID = *order_countID;
           array[position].isEmpty = 1;
-          array[position].discarded = 0;
+          array[position].descartados = 0;
           strcpy(array[position].status, "Pendiente");
           } else {
             printf("El Id ingresado no pertenece a ningun cliente");

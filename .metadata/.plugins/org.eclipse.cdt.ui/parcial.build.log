@@ -1,9 +1,9 @@
-11:49:11 **** Build of configuration Debug for project parcial ****
+16:02:41 **** Build of configuration Debug for project parcial ****
 make all 
 Cannot run program "make": Launching failed
 
 Error: Program "make" not found in PATH
 PATH=[C:/Program Files/Java/jre1.8.0_221/bin/server;C:/Program Files/Java/jre1.8.0_221/bin;C:/Program Files/Java/jre1.8.0_221/lib/amd64;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Python27\;C:\Python27\Scripts;C:\ProgramData\Boxstarter;C:\Program Files (x86)\Intel\TXE Components\TCS\;C:\Program Files\Intel\TXE Components\TCS\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\TXE Components\DAL\;C:\Program Files (x86)\Intel\TXE Components\DAL\;C:\Program Files\Intel\TXE Components\IPT\;C:\Program Files (x86)\Intel\TXE Components\IPT\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Microsoft VS Code\bin;C:\Program Files\Git\cmd;C:\ProgramData\chocolatey\bin;C:\Program Files\nodejs\;C:\MinGW\bin;;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Users\alejr\AppData\Local\Programs\Python\Python37\Scripts\;C:\Users\alejr\AppData\Local\Programs\Python\Python37\;C:\Users\alejr\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\PyCharm Community Edition 2018.3.5\bin;;C:\Users\alejr\AppData\Roaming\npm;C:\Users\alejr\AppData\Local\Microsoft\WindowsApps;;C:\WINDOWS\system32;]
 
-11:49:13 Build Failed. 1 errors, 0 warnings. (took 1s.340ms)
+16:02:42 Build Failed. 1 errors, 0 warnings. (took 1s.317ms)
 

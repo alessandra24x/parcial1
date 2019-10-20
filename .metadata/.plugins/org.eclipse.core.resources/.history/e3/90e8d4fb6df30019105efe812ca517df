@@ -177,7 +177,7 @@ int order_processWaste(Order array[], int size) {
             auxtotalKg = auxtotalKg - auxPP_kg;
           }
 
-          array[position].discarded = auxtotalKg;
+          array[position].descartados = auxtotalKg;
 
           auxtotalKg = 0;
 

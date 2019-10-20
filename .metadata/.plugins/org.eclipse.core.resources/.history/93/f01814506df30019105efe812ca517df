@@ -149,7 +149,7 @@ int main() {
                       break;
                     case 5:
                       printf("Cliente que recicló menos kilos\n");
-                      customer_lessRecycle(arrayCustomer,QTY_CUSTOMER,arrayOrder, QTY_ORDER);
+                      customer_LessRecycle(arrayCustomer,QTY_CUSTOMER,arrayOrder, QTY_ORDER);
                       break;
                     case 6:
                       printf("Cantidad de clientes que reciclaron mas de 1000 kilos\n");

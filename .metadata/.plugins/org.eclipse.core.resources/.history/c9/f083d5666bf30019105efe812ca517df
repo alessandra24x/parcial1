@@ -177,10 +177,9 @@ int order_processWaste(Order array[], int size) {
             auxtotalKg = auxtotalKg - auxPP_kg;
           }
 
-          array[position].discarded = auxtotalKg;
-
-          auxtotalKg = 0;
-
+          if(auxtotalKg > 0) {
+            auxtotalKg = 0;
+          }
 
           array[position].totalKg = auxtotalKg;
           array[position].isEmpty = 1;
@@ -234,6 +233,7 @@ int order_pendingStatus(Order* array, int size, int *countStatusPending, int cus
         }
         if(array[i].customerID == customerID && strcmp(array[i].status, "Pendiente") == 0) {
           countStatus++;
+
         }
       }
       retorno = 0;
@@ -289,17 +289,20 @@ int orderCompleteStatus_show(Order* array, int size) {
 * \param int size es la longitud del array
 *
 */
-void setOrder(Order array[], int searchEmpty, int orderIDAux, int customerIDAux, int totalKgAux, int HDPE_kgAux, int LDPE_kgAux,
-int PP_kgAux, char statusAux[]) {
+void setOrder(Order array[], int searchEmpty, int orderIDAux, int customerIDAux, int totalKgAux, char statusAux[]) {
   array[searchEmpty].orderID = orderIDAux;
   array[searchEmpty].customerID = customerIDAux;
   array[searchEmpty].totalKg = totalKgAux;
+  strcpy(array[searchEmpty].status, statusAux);
+  array[searchEmpty].isEmpty = 1;
+}
+
+void setWaste(Order array[], int searchEmpty, int orderIDAux, int HDPE_kgAux, int LDPE_kgAux, int PP_kgAux, char statusAux[]) {
+  array[searchEmpty].orderID = orderIDAux;
   array[searchEmpty].HDPE_kg = HDPE_kgAux;
   array[searchEmpty].LDPE_kg = LDPE_kgAux;
   array[searchEmpty].PP_kg = PP_kgAux;
-  array[searchEmpty].discarded = totalKgAux - HDPE_kgAux - LDPE_kgAux - PP_kgAux;
   strcpy(array[searchEmpty].status, statusAux);
-  array[searchEmpty].isEmpty = 1;
 }
 
 /** \brief Valida que el array este vacio o con datos ya cargados

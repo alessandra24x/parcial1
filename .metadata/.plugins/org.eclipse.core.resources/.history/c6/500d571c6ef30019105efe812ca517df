@@ -1,0 +1,430 @@
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "utn.h"
+#include "order.h"
+#include "customer.h"
+
+int customer_moreOrderPendingStatus(Customer* array, int size, Order* arrayOrder, int sizeOrder) {
+  int retorno = -1;
+  int i;
+  int indexMax;
+  int countStatusPending = 0;
+  int max = 0;
+  if(array!= NULL && size > 0) {
+    for(i = 0; i < size; i++) {
+      if(array[i].isEmpty == 0) {
+        continue;
+      } else {
+        order_pendingStatus(arrayOrder, sizeOrder,&countStatusPending, array[i].customerID);
+        if(countStatusPending > max) {
+        	indexMax = i;
+        	max = countStatusPending;
+        }
+      }
+    }
+    printf("\n El cliente con la mayor cantidad de Ordenes con estado pendiente es: %s\n",array[indexMax].name);
+    retorno = 0;
+  }
+ return retorno;
+}
+
+int order_completeStatus(Order* array, int size, int *countStatusComplete, int customerID) {
+  int retorno = -1;
+  int i;
+  int countStatus = 0;
+    if(array!= NULL && size > 0) {
+      for(i = 0; i < size; i++) {
+        if(array[i].isEmpty == 0) {
+          continue;
+        }
+        if(array[i].customerID == customerID && strcmp(array[i].status, "Completado") == 0) {
+          countStatus++;
+        }
+      }
+      retorno = 0;
+  }
+  *countStatusComplete = countStatus;
+  return retorno;
+}
+
+int customer_moreOrderCompleteStatus(Customer* array, int size, Order* arrayOrder, int sizeOrder) {
+  int retorno = -1;
+  int i;
+  int indexMax;
+  int countStatusComplete = 0;
+  int max =0;
+  if(array!= NULL && size > 0) {
+    for(i = 0; i < size; i++) {
+      if(array[i].isEmpty == 0) {
+        continue;
+      } else {
+        order_completeStatus(arrayOrder, sizeOrder,&countStatusComplete, array[i].customerID);
+        printf("\nvalor: %d\n", countStatusComplete);
+        if(countStatusComplete > max) {
+        	indexMax = i;
+        	max = countStatusComplete;
+        }
+      }
+    }
+    printf("\n El cliente con la mayor cantidad de Ordenes con estado completado es: %s\n",array[indexMax].name);
+    retorno = 0;
+  }
+ return retorno;
+}
+
+int order(Order* array, int size, int *countOrder, int customerID) {
+  int retorno = -1;
+  int i;
+  int countOrderAux = 0;
+    if(array!= NULL && size > 0) {
+      for(i = 0; i < size; i++) {
+        if(array[i].isEmpty == 0) {
+          continue;
+        }
+        if(array[i].customerID == customerID) {
+          countOrderAux++;
+        }
+      }
+      retorno = 0;
+  }
+  *countOrder = countOrderAux;
+  return retorno;
+}
+
+int customer_moreOrder(Customer* array, int size, Order* arrayOrder, int sizeOrder) {
+  int retorno = -1;
+  int i;
+  int indexMax;
+  int countOrder = 0;
+  int max = 0;
+  if(array!= NULL && size > 0) {
+    for(i = 0; i < size; i++) {
+      if(array[i].isEmpty == 0) {
+        continue;
+      } else {
+        order(arrayOrder, sizeOrder,&countOrder, array[i].customerID);
+        if(countOrder > max) {
+        	indexMax = i;
+        	max = countOrder;
+        }
+      }
+    }
+    printf("\n El cliente con la mayor cantidad de Ordenes es: %s\n",array[indexMax].name);
+    retorno = 0;
+  }
+ return retorno;
+}
+
+int customer_qtyRecycle(Order* array, int size, int *countKg, int customerID) {
+	int retorno = -1;
+	int i;
+	int countKgAux = 0;
+    int sum = 0;
+	    if(array!= NULL && size > 0) {
+	      for(i = 0; i < size; i++) {
+	        if(array[i].isEmpty == 0) {
+	          continue;
+	        }
+	        if(array[i].customerID == customerID && strcmp(array[i].status, "Completado") == 0) {
+	          sum = sum + array[i].HDPE_kg + array[i].LDPE_kg + array[i].PP_kg;
+              countKgAux = sum;
+	        }
+	      }
+	      retorno = 0;
+	  }
+	  *countKg = countKgAux;
+	  return retorno;
+}
+
+int customer_moreRecycle(Customer* array, int size, Order* arrayOrder, int sizeOrder) {
+  int retorno = -1;
+  int i;
+  int indexMax;
+  int count_Kg = 0;
+  int max;
+  if(array!= NULL && size > 0) {
+    for(i = 0; i < size; i++) {
+      if(array[i].isEmpty == 0) {
+        continue;
+      } else {
+        customer_qtyRecycle(arrayOrder, sizeOrder,&count_Kg, array[i].customerID);
+        if(count_Kg > max) {
+        	indexMax = i;
+        	max = count_Kg;
+        }
+      }
+    }
+    printf("\n El cliente con la mayor cantidad de Kilos es: %s\n",array[indexMax].name);
+    retorno = 0;
+  }
+ return retorno;
+}
+
+int customer_lessRecycle(Customer* array, int size, Order* arrayOrder, int sizeOrder) {
+  int retorno = -1;
+  int i;
+  int indexMax;
+  int count_Kg = 0;
+  int min = 1;
+  if(array!= NULL && size > 0) {
+    for(i = 0; i < size; i++) {
+      if(array[i].isEmpty == 0) {
+        continue;
+      } else {
+        customer_qtyRecycle(arrayOrder, sizeOrder,&count_Kg, array[i].customerID);
+        printf("\nvalor: %d\n", count_Kg);
+
+        if(count_Kg > 0) {
+          if(count_Kg < min)
+            indexMax = i;
+            min = count_Kg;
+        }
+      }
+    }
+    printf("\nMin: %d", min);
+    printf("\n El cliente con la menor cantidad de Kilos es: %s\n",array[indexMax].name);
+    retorno = 0;
+  }
+ return retorno;
+}
+
+int customer_more1000KgLess100KgRecycle(Customer* array, int size, Order* arrayOrder, int sizeOrder) {
+  int retorno = -1;
+  int i;
+  int indexMax;
+  int count_Kg = 0;
+  int countMore1000 = 0;
+  int countMore100 = 0;
+
+  if(array!= NULL && size > 0) {
+    for(i = 0; i < size; i++) {
+      if(array[i].isEmpty == 0) {
+        continue;
+      } else {
+        customer_qtyRecycle(arrayOrder, sizeOrder,&count_Kg, array[i].customerID);
+        printf("\nvalor: %d\n", count_Kg);
+        if(count_Kg > 1000) {
+        	countMore1000++;
+        } else if(count_Kg < 100 && count_Kg > 0) {
+          countMore100++;
+        }
+      }
+    }
+    printf("\n Cantidad de clientes que reciclaron mas de 1000 kilos: %d\n", countMore1000);
+    printf("\n Cantidad de clientes que reciclaron menos de 100 kilos: %d\n", countMore100);
+    retorno = 0;
+  }
+ return retorno;
+}
+
+int customer_averageRecycle(Order* array, int size, int customerID, char* cuit) {
+	int retorno = -1;
+	  int i;
+    float sumTotal = 0, sumProcesados = 0;
+    float averageAux;
+    int indexAux;
+	    if(array!= NULL && size > 0) {
+	      for(i = 0; i < size; i++) {
+	        if(array[i].isEmpty == 0) {
+	          continue;
+	        }
+	        if(array[i].customerID == customerID && strcmp(array[i].status, "Completado") == 0) {
+	          sumTotal =  array[i].HDPE_kg + array[i].LDPE_kg + array[i].PP_kg + array[i].descartados;
+
+            sumProcesados = array[i].HDPE_kg + array[i].LDPE_kg + array[i].PP_kg;
+            averageAux = sumProcesados / sumTotal * 100;
+          printf("Pedido id %d\n Cuit: %s\n Porcentaje: %f\n\n", array[i].orderID, cuit, averageAux);
+	        }
+	      }
+	      retorno = 0;
+	  }
+	  return retorno;
+}
+
+int order_statusCompleteWithAverage(Customer* array, int size, Order* arrayOrder, int sizeOrder) {
+  int retorno = -1;
+  int i;
+  int indexMax;
+  float average = 0;
+
+  if(array!= NULL && size > 0) {
+    for(i = 0; i < size; i++) {
+      if(array[i].isEmpty == 0) {
+        continue;
+      } else {
+
+        customer_averageRecycle(arrayOrder, sizeOrder, array[i].customerID, array[i].cuit);
+      }
+    }
+    retorno = 0;
+  }
+ return retorno;
+}
+
+int order_statusPendingLocation(Order* array, int size, int* count, int customerID) {
+  int retorno = -1;
+	int i;
+
+	    if(array!= NULL && size > 0) {
+	      for(i = 0; i < size; i++) {
+	        if(array[i].isEmpty == 0) {
+	          continue;
+	        }
+	        if(customerID == array[i].customerID && strcmp(array[i].status, "Pendiente") == 0) {
+	          (*count)++;
+	        }
+	      }
+	      retorno = 0;
+	  }
+	  return retorno;
+}
+
+int customer_location(Customer* array, int size, Order* arrayOrder, int sizeOrder) {
+int retorno = -1;
+int i, count = 0;
+char location[51];
+
+  utn_getName("\nIngrese una localidad: ", "Error, ingrese una localidad valida", 1,51, 2,location);
+
+  if(array!= NULL && size > 0) {
+    for(i = 0; i < size; i++) {
+      if(array[i].isEmpty == 0) {
+        continue;
+      } else if(strcmp(array[i].location,location) == 0) {
+          order_statusPendingLocation(arrayOrder, sizeOrder, &count, array[i].customerID);
+      }
+    }
+    printf("Los pedidos pendientes para la localidad: %s es: %d\n",location, count);
+    retorno = 0;
+  }
+ return retorno;
+}
+
+int customer_count(Customer* array, int size) {
+  int count = 0;
+  if(array!= NULL && size > 0) {
+      for(int i = 0; i < size; i++) {
+        if(array[i].isEmpty == 0) {
+          continue;
+        } else {
+          count++;
+        }
+    }
+  }
+  return count;
+}
+
+int order_completeStatusPP(Order* array, int size, Customer* arrayC, int sizeC, int customerID, char* name) {
+  printf("CustomerID es %d\n", customerID);
+  int retorno = -1;
+  int i;
+  float count = 0;
+  int sum = 0;
+  float average;
+
+  count = customer_count(arrayC, sizeC);
+
+    if(array!= NULL && size > 0) {
+      for(i = 0; i < size; i++) {
+        if(array[i].isEmpty == 0) {
+          continue;
+        }
+        if(array[i].customerID == customerID && strcmp(array[i].status, "Completado") == 0 && array[i].PP_kg > 0) {
+          sum += array[i].PP_kg;
+          average = sum / count;
+
+
+
+          printf("\nLa cantidad de kilos de Polipropileno reciclada promedio para el cliente %s\n es: %f\n", name, average);
+        }
+      }
+      retorno = 0;
+  }
+  return retorno;
+}
+
+int customer_averageKgPP(Customer* array, int size, Order* arrayOrder, int sizeOrder) {
+  int retorno = -1;
+  int i;
+  int count = 0;
+  if(array!= NULL && size > 0) {
+      for(i = 0; i < size; i++) {
+        if(array[i].isEmpty == 0) {
+          continue;
+        } else {
+          order_completeStatusPP(arrayOrder, sizeOrder, array, size, array[i].customerID, array[i].name);
+        }
+    }
+    retorno = 0;
+  }
+    return retorno;
+}
+
+int order_totalKgWaste(Order* array, int size, int customerID, char* cuit) {
+  int retorno = -1;
+	int i, option;
+  int totalHDPE_kg = 0;
+  int totalLDPE_kg = 0;
+  int totalPP_kg = 0;
+
+	    if(array!= NULL && size > 0) {
+	      for(i = 0; i < size; i++) {
+	        if(array[i].isEmpty == 0) {
+	          continue;
+	        } if(array[i].customerID == customerID && strcmp(array[i] .status, "Completado") == 0) {
+            totalHDPE_kg += array[i].HDPE_kg;
+            totalLDPE_kg += array[i].LDPE_kg;
+            totalPP_kg += array[i].PP_kg;
+          }
+	      }
+
+    do {
+       utn_getUnsignedInt("\n Ingrese uno de los 3 tipos de plástico: \n\n 1- HDPE(Polietileno de alta densidad)\n 2- LDPE(Polietileno de baja densidad)\n 3- PP(Polipropileno)\n 4- Salir \n\n", "\nError",1,sizeof(int),1,11,1,&option);
+
+    switch(option) {
+        case 1:
+          printf("CUIT: %s\n", cuit);
+          printf("La cantidad de kilos totales recicladas de HDPE es: %d\n", totalHDPE_kg);
+        break;
+        case 2:
+          printf("CUIT: %s\n", cuit);
+          printf("La cantidad de kilos totales recicladas de HDPE es: %d\n", totalLDPE_kg);
+        break;
+        case 3:
+          printf("CUIT: %s\n", cuit);
+          printf("La cantidad de kilos totales recicladas de HDPE es: %d\n", totalPP_kg);
+        break;
+        case 4:
+        break;
+        default:
+        printf("Opción invalida");
+      }
+
+    } while(option != 4);
+    	retorno = 0;
+	  }
+
+	  return retorno;
+}
+
+int customer_totalKgWasteShow(Customer* array, int size, Order* arrayOrder, int sizeOrder) {
+int retorno = -1;
+int i;
+char cuit[51];
+
+  utn_getCUIT("\nIngrese Cuit:\n", "Error, Cuit invalido", 2, cuit);
+
+  if(array!= NULL && size > 0) {
+    for(i = 0; i < size; i++) {
+      if(array[i].isEmpty == 0) {
+        continue;
+      } else if(strcmp(array[i].cuit,cuit) == 0) {
+          order_totalKgWaste(arrayOrder, sizeOrder, array[i].customerID, array[i].cuit);
+      }
+    }
+
+    retorno = 0;
+  }
+ return retorno;
+}

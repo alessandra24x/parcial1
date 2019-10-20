@@ -7,18 +7,21 @@ C_SRCS += \
 ../src/customer.c \
 ../src/main.c \
 ../src/order.c \
+../src/report.c \
 ../src/utn.c 
 
 OBJS += \
 ./src/customer.o \
 ./src/main.o \
 ./src/order.o \
+./src/report.o \
 ./src/utn.o 
 
 C_DEPS += \
 ./src/customer.d \
 ./src/main.d \
 ./src/order.d \
+./src/report.d \
 ./src/utn.d 
 
 

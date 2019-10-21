@@ -17,7 +17,7 @@ int order_statusPendingLocation(Order* array, int size, int* count, int customer
 int customer_location(Customer* array, int size, Order* arrayOrder, int sizeOrder);
 
 int customer_count(Customer* array, int size);
-int order_completeStatusPP(Order* array, int size, int customerID, char* name);
+int order_completeStatusPP(Order* array, int size, int customerID, float *totalPPKg);
 int customer_averageKgPP(Customer* array, int size, Order* arrayOrder, int sizeOrder);
 
 int order_totalKgWaste(Order* array, int size, int customerID, char* cuit);

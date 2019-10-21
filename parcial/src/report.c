@@ -310,30 +310,24 @@ int customer_count(Customer* array, int size) {
   return count;
 }
 
-int order_completeStatusPP(Order* array, int size, Customer* arrayC, int sizeC, int customerID, char* name) {
-  printf("CustomerID es %d\n", customerID);
+int order_completeStatusPP(Order* array, int size, int customerID, float *totalPPKg) {
   int retorno = -1;
   int i;
   float count = 0;
-  int sum = 0;
-  float average;
-
-  count = customer_count(arrayC, sizeC);
+  int sum = 0, sumAux = 0;
 
     if(array!= NULL && size > 0) {
       for(i = 0; i < size; i++) {
         if(array[i].isEmpty == 0) {
           continue;
-        }
+        } 
         if(array[i].customerID == customerID && strcmp(array[i].status, "Completado") == 0 && array[i].PP_kg > 0) {
           sum += array[i].PP_kg;
-          average = sum / count;
-
-
-
-          printf("\nLa cantidad de kilos de Polipropileno reciclada promedio para el cliente %s\n es: %f\n", name, average);
+          sumAux = sum;
+          
         }
       }
+      *totalPPKg = sumAux;
       retorno = 0;
   }
   return retorno;
@@ -343,14 +337,20 @@ int customer_averageKgPP(Customer* array, int size, Order* arrayOrder, int sizeO
   int retorno = -1;
   int i;
   int count = 0;
+  float totalPPKg = 0, average = 0, sum = 0;
+  count = customer_count(array, size);
+	
   if(array!= NULL && size > 0) {
       for(i = 0; i < size; i++) {
         if(array[i].isEmpty == 0) {
           continue;
         } else {
-          order_completeStatusPP(arrayOrder, sizeOrder, array, size, array[i].customerID, array[i].name);
+          order_completeStatusPP(arrayOrder, sizeOrder, array[i].customerID, &totalPPKg);
+          sum += totalPPKg;
         }
     }
+    average = sum / count;
+    printf("\nLa cantidad de kilos de Polipropileno reciclada promedio es de %f\n", average);
     retorno = 0;
   }
     return retorno;
@@ -375,7 +375,7 @@ int order_totalKgWaste(Order* array, int size, int customerID, char* cuit) {
 	      }
 
     do {
-       utn_getUnsignedInt("\n Ingrese uno de los 3 tipos de plástico: \n\n 1- HDPE(Polietileno de alta densidad)\n 2- LDPE(Polietileno de baja densidad)\n 3- PP(Polipropileno)\n 4- Salir \n\n", "\nError",1,sizeof(int),1,11,1,&option);
+       utn_getUnsignedInt("\n Ingrese uno de los 3 tipos de plÃ¡stico: \n\n 1- HDPE(Polietileno de alta densidad)\n 2- LDPE(Polietileno de baja densidad)\n 3- PP(Polipropileno)\n 4- Salir \n\n", "\nError",1,sizeof(int),1,11,1,&option);
 
     switch(option) {
         case 1:
@@ -393,7 +393,7 @@ int order_totalKgWaste(Order* array, int size, int customerID, char* cuit) {
         case 4:
         break;
         default:
-        printf("Opción invalida");
+        printf("OpciÃ³n invalida");
       }
 
     } while(option != 4);
